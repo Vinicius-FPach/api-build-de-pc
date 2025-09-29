@@ -3,32 +3,45 @@ import { User } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
-  private items: User[] = [];
+  private users: User[] = [];
 
-  create(item: User) {
-    this.items.push(item);
-    return item;
+  create(user) {
+    const newUser: User = {
+      id: this.users.length + 1,
+      ...user,
+    };
+    this.users.push(newUser);
+    return newUser;
   }
 
-  findAll() {
-    return this.items;
+  findAll(filter?: string, page: number = 1): User[] {
+    let result = this.users;
+
+    if (filter) {
+      result = result.filter((user) =>
+        user.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+      );
+    }
+
+    const pageSize = 5;
+    return result.slice((page - 1) * pageSize, page * pageSize);
   }
 
-  findOne(id: string) {
-    const item = this.items.find((item) => item.id === id);
-    if (!item) throw new NotFoundException('Usuário não encontrado');
-    return item;
+  findOne(id: number) {
+    const user = this.users.find((u) => u.id === id);
+    if (!user) throw new NotFoundException('Usuário não encontrado');
+    return user;
   }
 
-  update(id: string, data: Partial<User>) {
+  update(id: number, data: Partial<User>) {
     const item = this.findOne(id);
     Object.assign(item, data);
     return item;
   }
 
-  remove(id: string) {
-    const index = this.items.findIndex((user) => user.id === id);
+  remove(id: number) {
+    const index = this.users.findIndex((user) => user.id === id);
     if (index === -1) throw new NotFoundException('usuário não encontrado');
-    this.items.splice(index, 1);
+    this.users.splice(index, 1);
   }
 }
