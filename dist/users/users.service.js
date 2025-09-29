@@ -9,19 +9,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 let UsersService = class UsersService {
-    items = [];
-    create(item) {
-        this.items.push(item);
-        return item;
+    users = [];
+    create(user) {
+        const newUser = {
+            id: this.users.length + 1,
+            ...user,
+        };
+        this.users.push(newUser);
+        return newUser;
     }
-    findAll() {
-        return this.items;
+    findAll(filter, page = 1) {
+        let result = this.users;
+        if (filter) {
+            result = result.filter((user) => user.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()));
+        }
+        const pageSize = 5;
+        return result.slice((page - 1) * pageSize, page * pageSize);
     }
     findOne(id) {
-        const item = this.items.find((item) => item.id === id);
-        if (!item)
+        const user = this.users.find((u) => u.id === id);
+        if (!user)
             throw new common_1.NotFoundException('Usuário não encontrado');
-        return item;
+        return user;
     }
     update(id, data) {
         const item = this.findOne(id);
@@ -29,10 +38,10 @@ let UsersService = class UsersService {
         return item;
     }
     remove(id) {
-        const index = this.items.findIndex((user) => user.id === id);
+        const index = this.users.findIndex((user) => user.id === id);
         if (index === -1)
             throw new common_1.NotFoundException('usuário não encontrado');
-        this.items.splice(index, 1);
+        this.users.splice(index, 1);
     }
 };
 exports.UsersService = UsersService;
