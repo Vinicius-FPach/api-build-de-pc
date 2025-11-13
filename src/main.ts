@@ -1,16 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { HttpExceptionFilter } from './errors/http-exception/http-exception.filter';
+import { CustomExceptionFilter } from './errors/custom-exception/custom-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true, // converte automaticamente os tipos (ex: string para number)
-      whitelist: true, // remove propriedades não declaradas nos DTOs
-      forbidNonWhitelisted: true, // lança erro se o corpo contiver campos extras
-    }),
-  );
-  await app.listen(process.env.PORT ?? 3000);
+  app.useGlobalFilters(new HttpExceptionFilter(), new CustomExceptionFilter());
+  await app.listen(3000);
 }
 bootstrap();
