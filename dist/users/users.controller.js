@@ -14,9 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
+const custom_exception_filter_1 = require("../errors/custom-exception/custom-exception.filter");
 const users_service_1 = require("./users.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
-const query_filter_dto_1 = require("./dto/query-filter.dto");
+const response_interceptor_1 = require("../response/response.interceptor");
 let UsersController = class UsersController {
     usersService;
     constructor(usersService) {
@@ -25,11 +26,14 @@ let UsersController = class UsersController {
     createUser(CreateUserDto) {
         return this.usersService.create(CreateUserDto);
     }
-    findAllUsers(queryFilter) {
-        return this.usersService.findAll(queryFilter.filter, queryFilter.page);
+    findAll() {
+        return [{ id: 1, name: 'John Doe' }];
     }
     findOneUser(id) {
-        return this.usersService.findOne(id);
+        if (id !== 1) {
+            throw new common_1.HttpException('Usuário não encontrado', 404);
+        }
+        return { id, name: 'John Doe' };
     }
     update(id, body) {
         return this.usersService.update(id, body);
@@ -51,14 +55,13 @@ __decorate([
 ], UsersController.prototype, "createUser", null);
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [query_filter_dto_1.QueryFilterDto]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], UsersController.prototype, "findAllUsers", null);
+], UsersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
@@ -89,6 +92,8 @@ __decorate([
 ], UsersController.prototype, "remove", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
+    (0, common_1.UseFilters)(custom_exception_filter_1.CustomExceptionFilter),
+    (0, common_1.UseInterceptors)(response_interceptor_1.ResponseInterceptor),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 //# sourceMappingURL=users.controller.js.map

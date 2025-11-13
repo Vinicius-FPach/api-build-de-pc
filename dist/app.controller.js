@@ -12,22 +12,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const custom_exception_1 = require("./errors/custom-exception/custom-exception");
 let AppController = class AppController {
     appService;
     constructor(appService) {
         this.appService = appService;
     }
-    getHello() {
-        return this.appService.getHello();
+    throwCustomError() {
+        throw new custom_exception_1.CustomException();
     }
 };
 exports.AppController = AppController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/custom-error'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "throwCustomError", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
