@@ -6,9 +6,10 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { UsersModule } from './users/users.module';
 import { ErrorsModule } from './errors/errors.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [SharedModule, CoreModule, UsersModule, ErrorsModule],
+  imports: [SharedModule, CoreModule, UsersModule, ErrorsModule, PrismaModule],
   controllers: [AppController],
   providers: [AppService],
 })
