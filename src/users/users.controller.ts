@@ -7,10 +7,13 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
+import { CustomExceptionFilter } from 'src/errors/custom-exception/custom-exception.filter';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
 
 @Controller('users')
+@UseFilters(CustomExceptionFilter)
+@UseInterceptors(ResponseInterceptor)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
