@@ -6,10 +6,13 @@ import {
   Param,
   Patch,
   Delete,
+  UseFilters,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CustomExceptionFilter } from 'src/errors/custom-exception/custom-exception.filter';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
+import { ResponseInterceptor } from 'src/response/response.interceptor';
 
 @Controller('users')
 @UseFilters(CustomExceptionFilter)
