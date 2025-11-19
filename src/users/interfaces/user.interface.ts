@@ -1,9 +1,6 @@
 export interface User {
   id: number;
   name: string;
+  password: string;
   age: number;
-  address: {
-    city: string;
-    state: string;
-  };
 }
