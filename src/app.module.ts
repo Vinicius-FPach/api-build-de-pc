@@ -8,9 +8,10 @@ import { UsersModule } from './users/users.module';
 import { ErrorsModule } from './errors/errors.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { AdminsModule } from './admins/admins.module';
 
 @Module({
-  imports: [SharedModule, CoreModule, UsersModule, ErrorsModule, PrismaModule, AuthModule],
+  imports: [SharedModule, CoreModule, UsersModule, ErrorsModule, PrismaModule, AuthModule, AdminsModule],
   controllers: [AppController],
   providers: [AppService],
 })

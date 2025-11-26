@@ -15,13 +15,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   // Método chamado após validação do token. 'payload' é o conteúdo decodificado do JWT.
   async validate(payload: any) {
-    // Podemos extrair informações do payload. Aqui esperamos { sub: userId, email: email }
-    const userId = payload.sub;
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user) {
-      throw new UnauthorizedException('Usuário não encontrado.');
-    }
-    const { password: _password, ...safeUser } = user; // remover campo sensível
-    return safeUser; // O valor retornado aqui será atribuído a req.user
+    return {
+      id: payload.sub,
+      email: payload.email,
+      role: payload.role,
+    };
   }
 }

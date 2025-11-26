@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy'; // (criaremos em breve)
 import { PrismaService } from 'src/prisma/prisma.service'; // ajuste o path conforme seu projeto
+import { RolesGuard } from './roles.guard';
 
 @Module({
   imports: [
