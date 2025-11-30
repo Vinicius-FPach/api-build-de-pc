@@ -24,4 +24,43 @@ model User {
   password String
   name     String?
   roles    Role   @default(USER) //apenas uma role
+
+  builds    Build[]
+}
+
+model Hardware {
+  id          String  @id @default(cuid())
+  name        String
+  category    String   // GPU, CPU, RAM, etc
+  manufacturer String?
+  specs       Json?    // opcional: colocar dados flexíveis (freq, VRAM, etc)
+  price       Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  builds      BuildHardware[]
+}
+
+model Build {
+  id          String        @id @default(cuid())
+  name        String
+  userId      String        
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user        User          @relation(fields: [userId], references: [id])
+
+  hardware    BuildHardware[]
+}
+
+model BuildHardware {
+  id         String     @id @default(cuid())
+  buildId    String
+  hardwareId String
+
+  build      Build      @relation(fields: [buildId], references: [id])
+  hardware   Hardware   @relation(fields: [hardwareId], references: [id])
+
+  // Para evitar duplicidade do mesmo hardware 2x na mesma build
+  @@unique([buildId, hardwareId])
 }

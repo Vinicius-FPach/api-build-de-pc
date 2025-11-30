@@ -11,12 +11,23 @@ import { AuthModule } from './auth/auth.module';
 import { AdminsModule } from './admins/admins.module';
 
 @Module({
-  imports: [SharedModule, CoreModule, UsersModule, ErrorsModule, PrismaModule, AuthModule, AdminsModule],
+  imports: [
+    SharedModule,
+    CoreModule,
+    UsersModule,
+    ErrorsModule,
+    PrismaModule,
+    AuthModule,
+    AdminsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('*');
+    consumer
+      .apply(AuthMiddleware)
+      .exclude('auth/login', 'auth/register', 'api', 'api-json')
+      .forRoutes('*');
   }
 }
