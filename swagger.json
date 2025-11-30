@@ -346,6 +346,317 @@
           "admin"
         ]
       }
+    },
+    "/hardware": {
+      "post": {
+        "operationId": "HardwareController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHardwareDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Hardware criado com sucesso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cria um novo hardware (ADMIN)",
+        "tags": [
+          "hardware"
+        ]
+      },
+      "get": {
+        "operationId": "HardwareController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Lista todos os hardwares (PÚBLICO)",
+        "tags": [
+          "hardware"
+        ]
+      }
+    },
+    "/hardware/{id}": {
+      "patch": {
+        "operationId": "HardwareController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHardwareDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hardware atualizado com sucesso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Atualiza um hardware pelo ID (ADMIN)",
+        "tags": [
+          "hardware"
+        ]
+      },
+      "delete": {
+        "operationId": "HardwareController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hardware deletado com sucesso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Deleta um hardware pelo ID (ADMIN)",
+        "tags": [
+          "hardware"
+        ]
+      },
+      "get": {
+        "operationId": "HardwareController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Obtém hardware por ID (PÚBLICO)",
+        "tags": [
+          "hardware"
+        ]
+      }
+    },
+    "/builds": {
+      "post": {
+        "operationId": "BuildController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBuildDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Montagem criada com sucesso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cria uma nova montagem de PC para o usuário logado",
+        "tags": [
+          "builds"
+        ]
+      },
+      "get": {
+        "operationId": "BuildController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lista montagens: Todas (Admin) ou Somente do Usuário (User)",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/builds/{id}": {
+      "get": {
+        "operationId": "BuildController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Busca os detalhes de uma montagem por ID",
+        "tags": [
+          "builds"
+        ]
+      },
+      "delete": {
+        "operationId": "BuildController_removeBuild",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Montagem deletada com sucesso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Deleta uma montagem de PC (apenas o dono ou Admin)",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/builds/{buildId}/hardware": {
+      "post": {
+        "operationId": "BuildController_addHardware",
+        "parameters": [
+          {
+            "name": "buildId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddHardwareDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Hardware associado com sucesso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Adiciona um hardware à montagem especificada (apenas o dono ou Admin)",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/builds/{buildId}/hardware/{hardwareId}": {
+      "delete": {
+        "operationId": "BuildController_removeHardware",
+        "parameters": [
+          {
+            "name": "buildId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hardwareId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Hardware removido da montagem com sucesso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove um hardware da montagem (apenas o dono ou Admin)",
+        "tags": [
+          "builds"
+        ]
+      }
     }
   },
   "info": {
@@ -384,6 +695,105 @@
         "required": [
           "email",
           "password"
+        ]
+      },
+      "CreateHardwareDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Intel Core i5-13400"
+          },
+          "category": {
+            "type": "string",
+            "example": "CPU"
+          },
+          "manufacturer": {
+            "type": "string",
+            "example": "Intel"
+          },
+          "specs": {
+            "type": "object",
+            "example": {
+              "cores": 10,
+              "threads": 16,
+              "boost": "4.6GHz"
+            }
+          },
+          "price": {
+            "type": "number",
+            "example": 1200
+          },
+          "wattage": {
+            "type": "number",
+            "example": 65
+          }
+        },
+        "required": [
+          "name",
+          "category",
+          "wattage"
+        ]
+      },
+      "UpdateHardwareDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Intel Core i5-13400"
+          },
+          "category": {
+            "type": "string",
+            "example": "CPU"
+          },
+          "manufacturer": {
+            "type": "string",
+            "example": "Intel"
+          },
+          "specs": {
+            "type": "object",
+            "example": {
+              "cores": 10,
+              "threads": 16,
+              "boost": "4.6GHz"
+            }
+          },
+          "price": {
+            "type": "number",
+            "example": 1200
+          },
+          "wattage": {
+            "type": "number",
+            "example": 65
+          }
+        }
+      },
+      "CreateBuildDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome da montagem (ex: PC Gamer 2025)"
+          },
+          "sugPsu": {
+            "type": "number",
+            "description": "Potência de PSU sugerida em Watts."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "AddHardwareDto": {
+        "type": "object",
+        "properties": {
+          "hardwareId": {
+            "type": "string",
+            "description": "ID do Hardware a ser adicionado à montagem."
+          }
+        },
+        "required": [
+          "hardwareId"
         ]
       }
     }

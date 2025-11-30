@@ -9,6 +9,8 @@ import { ErrorsModule } from './errors/errors.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminsModule } from './admins/admins.module';
+import { HardwareModule } from './hardware/hardware.module';
+import { BuildModule } from './build/build.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { AdminsModule } from './admins/admins.module';
     PrismaModule,
     AuthModule,
     AdminsModule,
+    HardwareModule,
+    BuildModule,
   ],
   controllers: [AppController],
   providers: [AppService],
