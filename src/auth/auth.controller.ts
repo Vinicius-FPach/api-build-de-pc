@@ -23,7 +23,6 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'Usuário registrado com sucesso' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @Post('register')
-  // @HttpCode(HttpStatus.CREATED) - por padrão Post retorna 201 Created, use se quiser ser explícito
   async register(
     @Body('email') email: string,
     @Body('password') password: string,
@@ -38,7 +37,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Credenciais inválidas' })
   @ApiBody({ type: LoginDto })
   @Post('login')
-  @HttpCode(HttpStatus.OK) // define o status 200 OK explicitamente
+  @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto.email, loginDto.password);
   }

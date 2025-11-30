@@ -142,13 +142,11 @@ export class BuildService {
       );
     }
 
-    // 1. Cria a associação
     const newAssociation = await this.prisma.buildHardware.create({
       data: { buildId, hardwareId },
       include: { hardware: true },
     });
 
-    // 2. CORREÇÃO: Após adicionar, calcula e atualiza o sugPsu
     await this.updatePsu(buildId);
 
     return newAssociation;
