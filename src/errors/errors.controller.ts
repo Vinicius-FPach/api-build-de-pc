@@ -88,12 +88,10 @@ export class ErrorsController {
       throw new BadRequestException('O ID deve ser um número válido');
     }
 
-    // 2️⃣ Usuário não autenticado (erro 401)
     if (id === '0') {
       throw new UnauthorizedException('Usuário não autenticado');
     }
 
-    // 3️⃣ Usuário autenticado, mas sem permissão (erro 403)
     if (id === '2') {
       throw new ForbiddenException(
         'Você não tem permissão para acessar este recurso',
