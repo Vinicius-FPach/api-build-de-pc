@@ -8,12 +8,6 @@
 Api BuildWIse, API para montagem de computadores que integra dados como consumo de energia, gargalo e custo/benefício.
 Podendo sugerir upgrades futuros(ex:" pode trocar essa GPU no futuro sem trocar a fonte").
 
-## Link para a API em Produção
-
-```
-
-```
-
 ### Instalação (Getting Started)
 #### 1. Clone o repositório
 ```bash
