@@ -1,3 +1,5 @@
+![NestJS](https://img.shields.io/badge/nestjs-red)
+
 # api-build-de-pc(BuildWise)
 
 ## Identificação/Autor
